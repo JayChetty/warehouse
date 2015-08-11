@@ -24,4 +24,10 @@ describe ItemFinder do
     expect( item_finder.distance( ["gloves", "shoes"] ) ).to equal(6)
   end
 
+  it "should return false if item is missing" do
+    item_finder = ItemFinder.new
+    item_finder.load_items( [ { position:1, name:"hats" }, { position:4, name:"shoes" }, { position:10, name:"gloves" } ] )
+    expect( item_finder.distance( ["sausages", "shoes"] ) ).to equal(false)
+  end
+
 end

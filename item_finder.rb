@@ -27,6 +27,10 @@ class ItemFinder
         item == item_name
       end
     end
-    locations.max - locations.min
+    begin
+      locations.max - locations.min
+    rescue ArgumentError
+      false
+    end
   end
 end
