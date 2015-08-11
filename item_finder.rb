@@ -29,12 +29,16 @@ class ItemFinder
     locations
   end
 
-  def distance(item_names)
+  def distance_between_items(item_names)
     locations = item_names.map do |item_name|
       @items.find_index do |item|
         item == item_name
       end
     end
+    distance_for_locations(locations)
+  end
+
+  def distance_for_locations(locations)
     begin
       locations.max - locations.min
     rescue ArgumentError
