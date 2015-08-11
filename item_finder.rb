@@ -9,4 +9,15 @@ class ItemFinder
       @items[ item[:position] ] = item[:name]
     end
   end
+
+  def find_items(item_names)
+    locations = {}
+    item_names.each do |item_name|
+      index = @items.find_index do |item|
+        item == item_name
+      end
+      locations[item_name] = index
+    end
+    locations
+  end
 end
