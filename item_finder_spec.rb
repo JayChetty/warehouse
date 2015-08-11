@@ -6,6 +6,18 @@ describe ItemFinder do
     item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )
   end
 
+  it "should reveal items for a list of locations" do
+    item_finder = ItemFinder.new
+    item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )
+    expect(item_finder.search_locations( [ 0, 1 ] ) ).to include( { 0 => "hats", 1 => "shoes" } )
+  end
+
+  it "should assign nil if no item at location" do
+    item_finder = ItemFinder.new
+    item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )
+    expect(item_finder.search_locations( [ 0, 2 ] ) ).to include( { 0 => "hats", 2 => nil } )
+  end
+
   it "should find multiple items" do
     item_finder = ItemFinder.new
     item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )

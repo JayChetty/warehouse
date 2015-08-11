@@ -10,6 +10,14 @@ class ItemFinder
     end
   end
 
+  def search_locations(locations)
+    result = {}
+    locations.each do |location|
+      result[location] = @items[location]
+    end
+    result
+  end
+
   def find_items(item_names)
     locations = {}
     item_names.each do |item_name|
