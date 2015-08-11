@@ -18,6 +18,12 @@ class ItemFinder
     result
   end
 
+  def seach_locations_with_distance(locations)
+    items = search_locations(locations)
+    distance = distance_for_locations(locations)
+    {items: items, distance: distance}
+  end
+
   def find_items(item_names)
     locations = {}
     item_names.each do |item_name|
