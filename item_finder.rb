@@ -20,4 +20,13 @@ class ItemFinder
     end
     locations
   end
+
+  def distance(item_names)
+    locations = item_names.map do |item_name|
+      @items.find_index do |item|
+        item == item_name
+      end
+    end
+    locations.max - locations.min
+  end
 end
