@@ -20,7 +20,7 @@ class ItemFinder
 
   def seach_locations_with_distance(locations)
     items = search_locations(locations)
-    distance = distance_for_locations(locations)
+    distance = locations.max - locations.min
     {items: items, distance: distance}
   end
 
@@ -35,20 +35,14 @@ class ItemFinder
     locations
   end
 
-  def distance_between_items(item_names)
-    locations = item_names.map do |item_name|
-      @items.find_index do |item|
-        item == item_name
-      end
+  def find_items_with_path(item_names)
+    locations = find_items(item_names)
+    if locations.has_value?(nil)
+      path = false
+    else
+      path = locations.values.sort
     end
-    distance_for_locations(locations)
+    {locations: locations, path: path}
   end
 
-  def distance_for_locations(locations)
-    begin
-      locations.max - locations.min
-    rescue ArgumentError
-      false
-    end
-  end
 end

@@ -42,16 +42,15 @@ describe ItemFinder do
     expect( item_finder.find_items( ["sausages", "shoes"] ) ).to include( { "sausages" => nil, "shoes"=> 1 } )
   end
 
-  it "should show the distance between a set of items" do
+  it "should find items and show the path required to retrieve items" do
     item_finder = ItemFinder.new
     item_finder.load_items( [ { position:1, name:"hats" }, { position:4, name:"shoes" }, { position:10, name:"gloves" } ] )
-    expect( item_finder.distance_between_items( ["gloves", "shoes"] ) ).to equal(6)
+    expect( item_finder.find_items_with_path( ["gloves", "shoes"] ) ).to include( locations:{ "gloves" => 10, "shoes"=> 4 }, path: [ 4, 10 ] )
   end
 
-  it "should return false for distance if item is missing" do
+  it "should return false for path if item cannot be found" do
     item_finder = ItemFinder.new
     item_finder.load_items( [ { position:1, name:"hats" }, { position:4, name:"shoes" }, { position:10, name:"gloves" } ] )
-    expect( item_finder.distance_between_items( ["sausages", "shoes"] ) ).to equal(false)
+    expect( item_finder.find_items_with_path( ["sausages", "shoes"] ) ).to include( locations:{ "sausages" => nil, "shoes"=> 4 }, path: false)
   end
-
 end
