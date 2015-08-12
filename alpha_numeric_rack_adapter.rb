@@ -12,21 +12,24 @@ class AlphaNumericRackAdapter
     rack_number = @letter_array.find_index do |letter|
       rack_letter == letter
     end
+
     position_on_rack = string_code[1..-1].to_i
-    is_inverted = @reversed_racks.include?(rack_letter)
-    position_on_rack = @rack_length - position_on_rack + 1 if is_inverted
+    position_on_rack = @rack_length - position_on_rack + 1 if is_reversed(rack_letter)
+
     rack_number_out_of_range = !rack_number || rack_number > @number_of_racks - 1
     position_out_of_range = position_on_rack < 1 || position_on_rack > @rack_length
     raise KeyOutOfRangeError if rack_number_out_of_range || position_out_of_range
+
     (rack_number * 10) + position_on_rack - 1
   end
 
   def index_to_alpha_numeric_string(index)
     rack = index/10
-    position = index%10
     rack_letter = @letter_array[rack]
-    is_inverted = @reversed_racks.include?(rack_letter)
-    position = @rack_length - position - 1 if is_inverted
+
+    position = index%10
+    position = @rack_length - position - 1 if is_reversed(rack_letter)
+
     rack_letter + ( position + 1 ).to_s
   end
 
@@ -58,5 +61,10 @@ class AlphaNumericRackAdapter
 
   class KeyOutOfRangeError < StandardError
   end
+
+  private
+    def is_reversed(rack_letter)
+      @reversed_racks.include?(rack_letter)
+    end
 
 end
