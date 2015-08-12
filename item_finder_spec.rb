@@ -21,13 +21,13 @@ describe ItemFinder do
   it "should reveal items for a list of locations and show distance between them" do
     item_finder = ItemFinder.new
     item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )
-    expect(item_finder.seach_locations_with_distance( [ 0, 1 ] ) ).to eq( items: { 0 => "hats", 1 => "shoes" }, distance: 1 )
+    expect(item_finder.search_locations_with_distance( [ 0, 1 ] ) ).to eq( items: { 0 => "hats", 1 => "shoes" }, distance: 1 )
   end
 
   it "should still show distance value even when item doesn't exist in location " do
     item_finder = ItemFinder.new
     item_finder.load_items( [ { position:0, name:"hats" }, { position:1, name:"shoes" } ] )
-    expect(item_finder.seach_locations_with_distance( [ 0, 2 ] ) ).to eq( items: { 0 => "hats", 2 => nil }, distance: 2 )
+    expect(item_finder.search_locations_with_distance( [ 0, 2 ] ) ).to eq( items: { 0 => "hats", 2 => nil }, distance: 2 )
   end
 
   it "should find multiple items" do

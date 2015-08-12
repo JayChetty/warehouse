@@ -18,7 +18,7 @@ class ItemFinder
     result
   end
 
-  def seach_locations_with_distance(locations)
+  def search_locations_with_distance(locations)
     items = search_locations(locations)
     distance = locations.max - locations.min
     {items: items, distance: distance}
