@@ -44,7 +44,12 @@ class AlphaNumericRackAdapter
     indexs = locations.map do |location|
       alpha_numeric_string_to_index(location)
     end
-    @item_finder.search_locations_with_distance(indexs)
+    index_items_with_distance = @item_finder.search_locations_with_distance(indexs)
+    alpha_numeric_items = {}
+    index_items_with_distance[:items].each do |k,v|
+      alpha_numeric_items[index_to_alpha_numeric_string(k)] = v
+    end
+    { items: alpha_numeric_items, distance: index_items_with_distance[:distance]}
   end
 
   def find_items_with_path(item_names)

@@ -44,8 +44,19 @@ describe AlphaNumericRackAdapter do
   end
 
   it "should provide interface to search locations with distance using alpha numeric language" do
-    expect( item_finder ).to receive(:search_locations_with_distance).with( [ 0, 10 ] )
+    expect( item_finder ).to receive(:search_locations_with_distance).with( [ 0, 10 ] ) {
+      { items:{ 0 => "shoes", 10 => "hats" }, distance:  10  }
+    }
     adapter.search_locations_with_distance( [ "a1", "b1"] )
+  end
+
+
+  it "should return items with alphanumeric locations" do
+    allow( item_finder ).to receive(:search_locations_with_distance).with( [ 0, 10 ] ) do
+      { items:{ 0 => "shoes", 10 => "hats" }, distance:  10  }
+    end
+    expect( adapter.search_locations_with_distance( [ "a1", "b1"] ) )
+      .to eq( items: { "a1" => "shoes", "b1" => "hats",}, distance: 10 )
   end
 
   it "should provide interface to find items with path returned in alpha numeric language" do
