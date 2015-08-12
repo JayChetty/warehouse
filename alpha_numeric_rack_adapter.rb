@@ -1,15 +1,15 @@
 class AlphaNumericRackAdapter
-  def initialize( item_finder, number_of_racks, rack_length, reversed_racks = [] )
+  def initialize( item_finder, number_of_racks, rack_length, rack_keys=nil, reversed_racks = [] )
     @item_finder = item_finder
     @number_of_racks = number_of_racks
     @rack_length = rack_length
     @reversed_racks = reversed_racks
-    @letter_array = ("a".."z").to_a()
+    @rack_keys = rack_keys || ("a".."z").to_a()
   end
 
   def alpha_numeric_string_to_index(string_code)
     rack_letter = string_code[0]
-    rack_number = @letter_array.find_index do |letter|
+    rack_number = @rack_keys.find_index do |letter|
       rack_letter == letter
     end
 
@@ -25,7 +25,7 @@ class AlphaNumericRackAdapter
 
   def index_to_alpha_numeric_string(index)
     rack = index/10
-    rack_letter = @letter_array[rack]
+    rack_letter = @rack_keys[rack]
 
     position = index%10
     position = @rack_length - position - 1 if is_reversed(rack_letter)

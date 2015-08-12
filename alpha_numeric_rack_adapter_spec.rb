@@ -2,7 +2,7 @@ require_relative('./alpha_numeric_rack_adapter.rb')
 
 describe AlphaNumericRackAdapter do
   let(:item_finder){ double('finder') }
-  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, 3, 10, [] )}
+  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, 3, 10 )}
 
   it "should convert alpha numeric strings to array indexes" do
     expect( adapter.alpha_numeric_string_to_index("a1") ).to eq(0)
@@ -11,7 +11,7 @@ describe AlphaNumericRackAdapter do
   end
 
   it "should alter number of reversed racks if stated" do
-    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, [ "a","c" ] )
+    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, nil, [ "a","c" ] )
     expect( adapter_with_inversion.alpha_numeric_string_to_index("a10") ).to eq(0)
     expect( adapter_with_inversion.alpha_numeric_string_to_index("b1") ).to eq(10)
     expect( adapter_with_inversion.alpha_numeric_string_to_index("c10") ).to eq(20)
@@ -24,7 +24,7 @@ describe AlphaNumericRackAdapter do
   end
 
   it "should alter alpha numeric strings of reversed racks if stated" do
-    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, [ "a","c" ] )
+    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, nil, [ "a","c" ] )
     expect( adapter_with_inversion.index_to_alpha_numeric_string(0) ).to eq("a10")
     expect( adapter_with_inversion.index_to_alpha_numeric_string(10) ).to eq("b1")
     expect( adapter_with_inversion.index_to_alpha_numeric_string(20) ).to eq("c10")
