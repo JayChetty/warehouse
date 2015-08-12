@@ -2,7 +2,7 @@ require_relative('./alpha_numeric_rack_adapter.rb')
 
 describe AlphaNumericRackAdapter do
   let(:item_finder){ double('finder') }
-  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, 3, 10, [0,2] )}
+  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, 3, 10, [] )}
 
   it "should convert alpha numeric strings to array indexes" do
     expect( adapter.alpha_numeric_string_to_index("A1") ).to eq(0)
