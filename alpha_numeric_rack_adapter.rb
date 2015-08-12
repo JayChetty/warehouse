@@ -16,13 +16,10 @@ class AlphaNumericRackAdapter
     (rack_number * 10) + position_on_rack
   end
 
-  def index_to_alpha_numeric_string(string_code)
-    rack_letter = string_code[0]
-    rack_number = @letter_array.find_index do |letter|
-      rack_letter == letter
-    end
-    position_on_rack = string_code[1..-1].to_i - 1
-    (rack_number * 10) + position_on_rack
+  def index_to_alpha_numeric_string(index)
+    rack = index/10
+    position = index%10 + 1
+    @letter_array[rack] + position.to_s
   end
 
   def load_items(items_to_load)
@@ -39,15 +36,16 @@ class AlphaNumericRackAdapter
     @item_finder.search_locations_with_distance(indexs)
   end
 
-  # def find_items_with_path(item_names)
-  #   indexed_values = @item_finder.find_items_with_path(item_names)
-  #   indexed_values.locations.each do |name, location|
+  def find_items_with_path(item_names)
+    indexed_values = @item_finder.find_items_with_path(item_names)
+    alpha_locations = {}
+    indexed_values[:locations].each do |k,v|
+      alpha_locations[k] = index_to_alpha_numeric_string(v)
+    end
+    alpha_path = indexed_values[:path].map do |index|
+      index_to_alpha_numeric_string(index)
+    end
+    { locations: alpha_locations, path: alpha_path }
+  end
 
-  #   end
-  # end
-
-
-
-  # def method_missing
-  # end
 end
