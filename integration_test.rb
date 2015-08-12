@@ -49,4 +49,14 @@ describe "WarehousePickerIntegrationTest"  do
      .to eq items: { "b3" => "picture frame", "c7" => "paint brush", "c9" => "shoe lace", "a3"=>"blouse" }, distance: 15
   end
 
+  it 'given "shoe lace, rusty nail, leg warmers", determine that those items need to be collected from "c1, c9, and c10"' do
+    expect( adapter.find_items_with_path( ["shoe lace", "rusty nail", "leg warmers"] ) )
+    .to eq locations:{ "shoe lace" => "c9", "rusty nail"=> "c1", "leg warmers"=> "c10" }, path: [ "c1", "c9", "c10" ]
+  end
+
+  it 'given "hanger, deodorant, candy wrapper, rubber band", determine that those items need to be collected from "a10, a4, c8, and b9"' do
+    expect( adapter.find_items_with_path( ["hanger", "deodorant", "candy wrapper", "rubber band"] ) )
+    .to eq locations:{ "hanger" => "a4", "deodorant"=> "b9", "candy wrapper"=> "c8", "rubber band"=>"a10" }, path: [ "a10", "a4", "c8", "b9" ]
+  end
+
 end
