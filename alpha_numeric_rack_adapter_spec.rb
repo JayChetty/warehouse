@@ -10,10 +10,24 @@ describe AlphaNumericRackAdapter do
     expect( adapter.alpha_numeric_string_to_index("C10") ).to eq(29)
   end
 
+  it "should alter number of reversed racks if stated" do
+    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, [ "A","C" ] )
+    expect( adapter_with_inversion.alpha_numeric_string_to_index("A10") ).to eq(0)
+    expect( adapter_with_inversion.alpha_numeric_string_to_index("B1") ).to eq(10)
+    expect( adapter_with_inversion.alpha_numeric_string_to_index("C10") ).to eq(20)
+  end
+
   it "should convert indexes to alpha numeric strings" do
     expect( adapter.index_to_alpha_numeric_string(0) ).to eq("A1")
     expect( adapter.index_to_alpha_numeric_string(10) ).to eq("B1")
     expect( adapter.index_to_alpha_numeric_string(29) ).to eq("C10")
+  end
+
+  it "should alter alpha numeric strings of reversed racks if stated" do
+    adapter_with_inversion = AlphaNumericRackAdapter.new( item_finder, 3, 10, [ "A","C" ] )
+    expect( adapter_with_inversion.index_to_alpha_numeric_string(0) ).to eq("A10")
+    expect( adapter_with_inversion.index_to_alpha_numeric_string(10) ).to eq("B1")
+    expect( adapter_with_inversion.index_to_alpha_numeric_string(20) ).to eq("C10")
   end
 
   it "raise exeception if rack key is out of range" do

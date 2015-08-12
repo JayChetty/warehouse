@@ -1,9 +1,9 @@
 class AlphaNumericRackAdapter
-  def initialize( item_finder, number_of_racks, rack_length, inverted_racks = [] )
+  def initialize( item_finder, number_of_racks, rack_length, reversed_racks = [] )
     @item_finder = item_finder
     @number_of_racks = number_of_racks
     @rack_length = rack_length
-    @inverted_racks = inverted_racks
+    @reversed_racks = reversed_racks
     @letter_array = ("A".."Z").to_a()
   end
 
@@ -13,6 +13,8 @@ class AlphaNumericRackAdapter
       rack_letter == letter
     end
     position_on_rack = string_code[1..-1].to_i
+    is_inverted = @reversed_racks.include?(rack_letter)
+    position_on_rack = @rack_length - position_on_rack + 1 if is_inverted
     rack_number_out_of_range = !rack_number || rack_number > @number_of_racks - 1
     position_out_of_range = position_on_rack < 1 || position_on_rack > @rack_length
     raise KeyOutOfRangeError if rack_number_out_of_range || position_out_of_range
@@ -21,8 +23,11 @@ class AlphaNumericRackAdapter
 
   def index_to_alpha_numeric_string(index)
     rack = index/10
-    position = index%10 + 1
-    @letter_array[rack] + position.to_s
+    position = index%10
+    rack_letter = @letter_array[rack]
+    is_inverted = @reversed_racks.include?(rack_letter)
+    position = @rack_length - position - 1 if is_inverted
+    rack_letter + ( position + 1 ).to_s
   end
 
   def load_items(items_to_load)
