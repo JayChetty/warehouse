@@ -4,7 +4,7 @@ class AlphaNumericRackAdapter
     @number_of_racks = number_of_racks
     @rack_length = rack_length
     @reversed_racks = reversed_racks
-    @letter_array = ("A".."Z").to_a()
+    @letter_array = ("a".."z").to_a()
   end
 
   def alpha_numeric_string_to_index(string_code)
