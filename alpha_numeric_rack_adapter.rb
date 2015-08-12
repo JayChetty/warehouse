@@ -12,8 +12,11 @@ class AlphaNumericRackAdapter
     rack_number = @letter_array.find_index do |letter|
       rack_letter == letter
     end
-    position_on_rack = string_code[1..-1].to_i - 1
-    (rack_number * 10) + position_on_rack
+    position_on_rack = string_code[1..-1].to_i
+    rack_number_out_of_range = !rack_number || rack_number > @number_of_racks - 1
+    position_out_of_range = position_on_rack < 1 || position_on_rack > @rack_length
+    raise KeyOutOfRangeError if rack_number_out_of_range || position_out_of_range
+    (rack_number * 10) + position_on_rack - 1
   end
 
   def index_to_alpha_numeric_string(index)
@@ -46,6 +49,9 @@ class AlphaNumericRackAdapter
       index_to_alpha_numeric_string(index)
     end
     { locations: alpha_locations, path: alpha_path }
+  end
+
+  class KeyOutOfRangeError < StandardError
   end
 
 end

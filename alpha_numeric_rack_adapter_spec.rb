@@ -6,31 +6,23 @@ describe AlphaNumericRackAdapter do
 
   it "should convert alpha numeric strings to array indexes" do
     expect( adapter.alpha_numeric_string_to_index("A1") ).to eq(0)
-  end
-
-  it "should convert alpha numeric strings to array indexes" do
     expect( adapter.alpha_numeric_string_to_index("B1") ).to eq(10)
-  end
-
-  it "should convert alpha numeric strings to array indexes" do
     expect( adapter.alpha_numeric_string_to_index("C10") ).to eq(29)
   end
 
   it "should convert indexes to alpha numeric strings" do
     expect( adapter.index_to_alpha_numeric_string(0) ).to eq("A1")
-  end
-
-  it "should convert indexes to alpha numeric strings" do
     expect( adapter.index_to_alpha_numeric_string(10) ).to eq("B1")
-  end
-
-  it "should convert indexes to alpha numeric strings" do
     expect( adapter.index_to_alpha_numeric_string(29) ).to eq("C10")
   end
 
-  # it "raise exeception if out of range" do
-  #   expect( adapter.alpha_numeric_string_to_index("A0") ).to equal(29)
-  # end
+  it "raise exeception if rack key is out of range" do
+    expect{ adapter.alpha_numeric_string_to_index("D1") }.to raise_error( AlphaNumericRackAdapter::KeyOutOfRangeError )
+  end
+
+  it "raise exception if rack key is out of range" do
+    expect{ adapter.alpha_numeric_string_to_index("A0") }.to raise_error( AlphaNumericRackAdapter::KeyOutOfRangeError )
+  end
 
   it "should provide interface to load items using alpha numeric language" do
     expect( item_finder ).to receive(:load_items).with( [ { position:0, name:"hats" }, { position:10, name:"shoes" } ] )
