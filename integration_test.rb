@@ -3,7 +3,7 @@ require_relative "item_finder.rb"
 require_relative "alpha_numeric_rack_adapter.rb"
 describe "WarehousePickerIntegrationTest"  do
   let(:item_finder){ ItemFinder.new }
-  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, 3, 10, ['a','c','b'], ['a'] ) }
+  let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, ['a','c','b'], 10, ['a'] ) }
   before(:each) do
     adapter.load_items( [
       { name: 'bath fizzers'  , position: 'b7' },
