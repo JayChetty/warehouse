@@ -1,4 +1,4 @@
-require_relative './item_finder.rb'
+require_relative '../item_finder.rb'
 
 describe ItemFinder do
   it "should load multiple items" do

@@ -1,6 +1,7 @@
 #integration test,  using the spec given for the warehouse picker exercise
-require_relative "item_finder.rb"
-require_relative "alpha_numeric_rack_adapter.rb"
+require_relative '../item_finder.rb'
+require_relative '../alpha_numeric_rack_adapter.rb'
+
 describe "WarehousePickerIntegrationTest"  do
   let(:item_finder){ ItemFinder.new }
   let(:adapter){adapter = AlphaNumericRackAdapter.new( item_finder, ['a','c','b'], 10, ['a'] ) }

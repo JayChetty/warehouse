@@ -1,4 +1,4 @@
-require_relative('./alpha_numeric_rack_adapter.rb')
+require_relative '../alpha_numeric_rack_adapter.rb'
 
 describe AlphaNumericRackAdapter do
   let(:item_finder){ double('finder') }
