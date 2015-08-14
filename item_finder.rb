@@ -9,13 +9,14 @@ class ItemFinder
     end
   end
 
+  attr_writer :translator
+
   def initialize(translator=nil)
     @items = []
     @translator = translator || BasicTranslator.new
   end
 
   def load_items(items_to_load)
-    #example item { position:1, name: "hats" }
     items_to_load.each do |item|
       @items[ @translator.key_to_index( item[:position] ) ] = item[:name]
     end
