@@ -21,7 +21,7 @@ class ItemFinder
     end
   end
 
-  def search_locations(locations)
+  def show_items_at_locations(locations)
     result = {}
     locations.each do |location|
       result[location] = @items[ @translator.key_to_index( location ) ]
@@ -34,11 +34,11 @@ class ItemFinder
     indexed_locations.max - indexed_locations.min
   end
 
-  def search_locations_with_distance(locations)
-    {items: search_locations(locations), distance: distance_between_locations( locations )}
+  def find_items_at_locations_and_distance(locations)
+    {items: show_items_at_locations(locations), distance: distance_between_locations( locations )}
   end
 
-  def find_items(item_names)
+  def find_locations_of_items(item_names)
     locations = {}
     item_names.each do |item_name|
       index = @items.find_index do |item|
@@ -49,7 +49,7 @@ class ItemFinder
     locations
   end
 
-  def find_path(item_names)
+  def path_for_items(item_names)
     indexed_locations = item_names.map do |item_name|
       @items.find_index { |item| item == item_name }
     end
@@ -58,8 +58,8 @@ class ItemFinder
     indexed_locations.map { |index| @translator.index_to_key( index ) }
   end
 
-  def find_items_with_path(item_names)
-    {locations: find_items( item_names ), path: find_path( item_names )}
+  def show_locations_of_items_with_path(item_names)
+    {locations: find_locations_of_items( item_names ), path: path_for_items( item_names )}
   end
 
 end
