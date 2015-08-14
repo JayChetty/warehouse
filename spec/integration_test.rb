@@ -1,14 +1,14 @@
 #integration test,  using the spec given for the warehouse picker exercise
 require_relative '../item_finder.rb'
-require_relative '../alpha_numeric_rack_translator.rb'
+require_relative '../alpha_numeric_rack_key_generator.rb'
 require_relative '../simple_translator.rb'
 
+
 describe "WarehousePickerIntegrationTest"  do
-  # let(:translator){ AlphaNumericRackTranslator.new( ['a','c','b'], 10, ['a'] ) }
-  let(:translator){ SimpleTranslator.new( 
-    ['a10','a9','a8','a7','a6','a5','a4','a3','a2','a1',
-     'c1','c2','c3','c4','c5','c6','c7','c8','c9','c10',
-     'b1','b2','b3','b4','b5','b6','b7','b8','b9','b10', ])
+
+  let(:translator){ 
+    key_map = AlphaNumericRackKeyGenerator.generate_keys( ['a','c','b'], 10, ['a'] )
+    SimpleTranslator.new( key_map )
   }
 
   let(:item_finder){ ItemFinder.new( translator ) }

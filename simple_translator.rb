@@ -16,8 +16,5 @@ class SimpleTranslator
   def index_to_key(index)
     @keys[index]
   end
-
-
-
-
+  
 end
