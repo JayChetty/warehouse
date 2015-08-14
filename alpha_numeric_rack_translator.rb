@@ -1,4 +1,4 @@
-class AlphaNumericRackAdapter
+class AlphaNumericRackTranslator
 
   class KeyOutOfRangeError < StandardError
   end

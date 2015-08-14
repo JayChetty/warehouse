@@ -1,10 +1,10 @@
 #integration test,  using the spec given for the warehouse picker exercise
 require_relative '../item_finder.rb'
-require_relative '../alpha_numeric_rack_adapter.rb'
+require_relative '../alpha_numeric_rack_translator.rb'
 
 describe "WarehousePickerIntegrationTest"  do
-  let(:adapter){ AlphaNumericRackAdapter.new( ['a','c','b'], 10, ['a'] ) }
-  let(:item_finder){ ItemFinder.new( adapter ) }
+  let(:translator){ AlphaNumericRackTranslator.new( ['a','c','b'], 10, ['a'] ) }
+  let(:item_finder){ ItemFinder.new( translator ) }
   before(:each) do
     item_finder.load_items( [
       { name: 'bath fizzers'  , position: 'b7' },
