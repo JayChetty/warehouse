@@ -1,27 +1,41 @@
 class ItemFinder
-  def initialize
+  class BasicTranslator
+    def key_to_index(key)
+      key
+    end
+
+    def index_to_key(index)
+      index
+    end
+  end
+
+  def initialize(translator=nil)
     @items = []
+    @translator = translator || BasicTranslator.new
   end
 
   def load_items(items_to_load)
     #example item { position:1, name: "hats" }
     items_to_load.each do |item|
-      @items[ item[:position] ] = item[:name]
+      @items[ @translator.key_to_index( item[:position] ) ] = item[:name]
     end
   end
 
   def search_locations(locations)
     result = {}
     locations.each do |location|
-      result[location] = @items[location]
+      result[location] = @items[ @translator.key_to_index( location ) ]
     end
     result
   end
 
+  def distance_between_locations(locations)
+    indexed_locations = locations.map { |location| @translator.key_to_index( location ) }
+    indexed_locations.max - indexed_locations.min
+  end
+
   def search_locations_with_distance(locations)
-    items = search_locations(locations)
-    distance = locations.max - locations.min
-    {items: items, distance: distance}
+    {items: search_locations(locations), distance: distance_between_locations( locations )}
   end
 
   def find_items(item_names)
@@ -30,19 +44,22 @@ class ItemFinder
       index = @items.find_index do |item|
         item == item_name
       end
-      locations[item_name] = index
+      locations[item_name] = @translator.index_to_key(index)
     end
     locations
   end
 
-  def find_items_with_path(item_names)
-    locations = find_items(item_names)
-    if locations.has_value?(nil)
-      path = false
-    else
-      path = locations.values.sort
+  def find_path(item_names)
+    indexed_locations = item_names.map do |item_name|
+      @items.find_index { |item| item == item_name }
     end
-    {locations: locations, path: path}
+    return false if indexed_locations.include?(nil)
+    indexed_locations.sort!
+    indexed_locations.map { |index| @translator.index_to_key( index ) }
+  end
+
+  def find_items_with_path(item_names)
+    {locations: find_items( item_names ), path: find_path( item_names )}
   end
 
 end
