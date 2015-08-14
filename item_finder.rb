@@ -35,7 +35,7 @@ class ItemFinder
     indexed_locations.max - indexed_locations.min
   end
 
-  def find_items_at_locations_and_distance(locations)
+  def show_items_at_locations_and_distance(locations)
     {items: show_items_at_locations(locations), distance: distance_between_locations( locations )}
   end
 
@@ -59,7 +59,7 @@ class ItemFinder
     indexed_locations.map { |index| @translator.index_to_key( index ) }
   end
 
-  def show_locations_of_items_with_path(item_names)
+  def find_locations_of_items_with_path(item_names)
     {locations: find_locations_of_items( item_names ), path: path_for_items( item_names )}
   end
 

@@ -1,10 +1,10 @@
-require_relative('item_finder_adapter.rb')
+class AlphaNumericRackAdapter
 
-class AlphaNumericRackAdapter < ItemFinderAdapter
+  class KeyOutOfRangeError < StandardError
+  end
   #uses first leter of key to find rack,  remainder of key to find position on rack
   #key of form [letter][number] (where number > 0)  eg a9, b111  (not accepted a0, ab5)
-  def initialize( item_finder, rack_keys, rack_length, reversed_racks = [] )
-    @item_finder = item_finder
+  def initialize( rack_keys, rack_length, reversed_racks = [] )
     @rack_keys = rack_keys
     @number_of_racks = @rack_keys.length
     @rack_length = rack_length

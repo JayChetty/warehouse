@@ -1,7 +1,5 @@
 require_relative '../item_finder.rb'
 
-
-
 describe ItemFinder do
   let(:item_finder){ item_finder = ItemFinder.new }
 
