@@ -8,9 +8,9 @@ class SimpleTranslator
   end
 
   def key_to_index(key_to_find)
-    key = @keys.find_index { | key | key_to_find == key }
-    raise KeyNotFound if key == nil
-    key
+    index = @keys.find_index { | key | key_to_find == key }
+    raise KeyNotFound if index == nil
+    index
   end
 
   def index_to_key(index)
