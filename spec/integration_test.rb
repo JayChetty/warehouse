@@ -11,7 +11,7 @@ describe "WarehousePickerIntegrationTest"  do
     SimpleTranslator.new( key_map )
   }
 
-  let(:item_finder){ ItemFinder.new( translator ) }
+  let(:item_finder){ ItemFinder.new( { translator: translator } ) }
   before(:each) do
     item_finder.load_items( [
       { name: 'bath fizzers'  , position: 'b7' },

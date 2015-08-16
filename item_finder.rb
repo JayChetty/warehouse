@@ -9,11 +9,31 @@ class ItemFinder
     end
   end
 
-  attr_writer :translator
+  class LinearDistanceCalculator
+    def distance_between_locations(items, locations, translator)
+      indexed_locations = locations.map { |location| translator.key_to_index( location ) }
+      indexed_locations.max - indexed_locations.min
+    end
+  end
 
-  def initialize(translator=nil)
+  class LinearPathFinder
+    def path_for_items(items, item_names, translator)
+      indexed_locations = item_names.map do |item_name|
+        items.find_index { |item| item == item_name }
+      end
+      return false if indexed_locations.include?(nil)
+      indexed_locations.sort!
+      indexed_locations.map { |index| translator.index_to_key( index ) }
+    end
+  end
+
+  attr_writer :translator, :distance_calculator, :path_finder
+
+  def initialize(options = {})
     @items = []
-    @translator = translator || BasicTranslator.new
+    @translator = options[:translator] || BasicTranslator.new
+    @distance_calculator = options[:distance_calculator] || LinearDistanceCalculator.new
+    @path_finder = options[:path_finder] || LinearPathFinder.new
   end
 
   def load_items(items_to_load)
@@ -31,8 +51,7 @@ class ItemFinder
   end
 
   def distance_between_locations(locations)
-    indexed_locations = locations.map { |location| @translator.key_to_index( location ) }
-    indexed_locations.max - indexed_locations.min
+    @distance_calculator.distance_between_locations(@items, locations, @translator)
   end
 
   def show_items_at_locations_and_distance(locations)
@@ -51,12 +70,7 @@ class ItemFinder
   end
 
   def path_for_items(item_names)
-    indexed_locations = item_names.map do |item_name|
-      @items.find_index { |item| item == item_name }
-    end
-    return false if indexed_locations.include?(nil)
-    indexed_locations.sort!
-    indexed_locations.map { |index| @translator.index_to_key( index ) }
+    @path_finder.path_for_items(@items, item_names, @translator)
   end
 
   def find_locations_of_items_with_path(item_names)
