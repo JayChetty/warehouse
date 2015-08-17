@@ -3,7 +3,7 @@ ItemFinder(item_finder.rb) instances provide an interface to load, search, find 
 The behaviour can be tailored using the strategy design pattern, to configure the keys to the locations,  the distance calculation and path finding algorithm.
 By default keys are the index location the array,  distance calculation is difference in index number between first and last location, collections paths are the sorted order of the locations. 
 
-Example in spec/integration_test satisfying the warehouse picker spec shown below. Here an ItemFinder is instantiated with a translator using the mapping [a10..a1,c1..c10,b10..b1], and continues to use the default linear distance calculation and linear path finding.
+Example in spec/integration_test satisfying the warehouse picker spec shown below. Here an ItemFinder is instantiated with a translator using the key mapping [a10..a1,c1..c10,b1..b10], and continues to use the default linear distance calculation and linear path finding.
 
 
 ### Warehouse Picker
